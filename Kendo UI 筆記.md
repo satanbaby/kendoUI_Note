@@ -176,6 +176,62 @@ $(document).ready(function () {
 });
 ```
 
+### 在 dialog 使用自訂模板
+
+
+
+```html
+
+<div id="example">
+    <div id="dialog">
+    </div>
+    <span id="undo" style="display:none" class="k-button hide-on-narrow">Click here to open the dialog</span>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var dialog = $('#dialog'),
+            undo = $("#undo");
+
+        undo.click(function () {
+            dialog.data("kendoDialog").open();
+            undo.fadeOut();
+        });
+
+        function onClose() {
+            undo.fadeIn();
+        }
+      
+      	//var template = kendo.template("<div id='box'>#= firstName #</div>");
+        
+        dialog.kendoDialog({
+            width: "450px",
+            title: "Software Update",
+            closable: false,
+            modal: false,
+            content: kendo.template($('#template-confirmation').html())({data: '<span>render</span>'}),
+            close: onClose
+        });
+    });
+</script>
+  <script id="template-confirmation" type="text/x-kendo-template">
+    <h1>test</h1>
+    <p>test</p>
+    <p>#= data #</p>
+    <p>#: data #</p>
+</script>
+<style>
+    #example {
+        min-height: 350px;
+    }
+  span{
+    font-weight:bold
+  }
+</style>
+
+
+```
+
 ## Column propity
 
 - [columns.aggregates](https://docs.telerik.com/kendo-ui/api/javascript/ui/grid/configuration/columns.aggregates) 可使用個數、平均、總和、最大最小
